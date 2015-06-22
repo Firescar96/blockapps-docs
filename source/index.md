@@ -208,6 +208,6 @@ index= |	a cursor for querying the next 100 items correctly. Also see the next f
 
 Transaction	| Format
 ----------- | ------
+Contract | toAddress != Null and len(code) >= 0
 FunctionCall |	toAddress == Null and len(code) > 0
-Contract | toAddress == Null and len(code) >= 0
-Transaction |f	toAddress != Null and len(code) == 0
+Transaction |	toAddress != Null and len(code) == 0
