@@ -81,8 +81,8 @@ curl "http://stablenet.blockapps.net/query/block"
 
 Note that blocks come with a next field that contains the index for the next 100 results.
 
-Query	| Description
------ | -----------
+Parameter |	Description
+--------- | -----------
 number |	Returns blocks that match a specific number
 maxnumber |	Returns blocks with a number less than a maximum
 minnumber |	Returns blocks with a number greater than a minimum
@@ -114,6 +114,7 @@ curl "http://stablenet.blockapps.net/query/account"
 ```
 
 >The above command returns JSON structured like this:
+
 ```json
 [
   {
@@ -130,7 +131,8 @@ curl "http://stablenet.blockapps.net/query/account"
 
 `GET /query/account?`
 
-Query |	Description
+Parameter |	Description
+--------- | -----------
 balance |	Returns accounts that match a specific balance
 maxbalance |	Returns accounts with a balance less than a maximum
 minbalance |	Returns accounts with a balance greater than a minimum
@@ -178,8 +180,8 @@ curl "http://stablenet.blockapps.net/query/transaction"
 
 `GET /query/transaction?`
 
-Query |	Description
------ | -----------
+Parameter |	Description
+--------- | -----------
 from |	Returns transactions from the specified address
 to |	Returns transactions to the specified address
 address |	Returns transactions involving the specified address
