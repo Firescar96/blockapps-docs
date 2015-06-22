@@ -1,0 +1,35 @@
+/usr/bin/ruby2.1 extconf.rb
+creating Makefile
+
+make "DESTDIR=" clean
+
+make "DESTDIR="
+compiling autolink.c
+compiling rc_render.c
+compiling buffer.c
+compiling houdini_html_e.c
+compiling html_smartypants.c
+compiling html.c
+html.c: In function ‘rndr_header’:
+html.c:290:57: warning: passing argument 1 of ‘header_anchor’ discards ‘const’ qualifier from pointer target type
+   bufprintf(ob, "<h%d id=\"%s\">", level, header_anchor(text));
+                                                         ^
+html.c:268:7: note: expected ‘struct buf *’ but argument is of type ‘const struct buf *’
+ char *header_anchor(struct buf *text)
+       ^
+html.c: In function ‘toc_header’:
+html.c:638:51: warning: passing argument 1 of ‘header_anchor’ discards ‘const’ qualifier from pointer target type
+   bufprintf(ob, "<a href=\"#%s\">", header_anchor(text));
+                                                   ^
+html.c:268:7: note: expected ‘struct buf *’ but argument is of type ‘const struct buf *’
+ char *header_anchor(struct buf *text)
+       ^
+compiling stack.c
+compiling markdown.c
+compiling rc_markdown.c
+compiling houdini_href_e.c
+linking shared-object redcarpet.so
+
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 redcarpet.so ./.gem.20150622-15097-zzbj8v
+installing default redcarpet libraries

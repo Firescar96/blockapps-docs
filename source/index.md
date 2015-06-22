@@ -1,168 +1,211 @@
 ---
-title: API Reference
+title: Blockapps Documentation
 
 language_tabs:
+  - javascript
   - shell
-  - ruby
-  - python
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
   - <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>
 
 includes:
-  - errors
 
 search: true
 ---
 
 # Introduction
+All blockchain based applications will need to pull information from the blockchain. We’ve made that process simple. We’ve created an intuitive RESTful API for querying the Ethereum Blockchain. Our Haskell based Ethereum network peer (client) is compliant with PoC9 and can also be used as a web server. But you don’t have to install the peer - simply follow the links below to try the API.
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+We have static GET routes for transactions, blocks and account states. More generally, we support query strings. See the descriptions within, including examples. Also, check out a demo of how to parse and visualize the records you’ve requested.
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+Take a look at our build test results.
 
-This example API documentation page was created with [Slate](http://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
+Coming Soon:
 
-# Authentication
+Push Notifications - be notified of new blocks, transaction confirmations, as they happen. Transaction Signing - sign transactions in the browser, and push them to the network - without running a client locally. Network Statistics - view the health of the network, in real time.
 
-> To authorize, use this code:
+#Endpoints
 
-```ruby
-require 'kittn'
+>Our javascript examples use the jQuery library
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
+There are three REST endpoints, corrensponding to the query of a block, address and a transaction, respectively.
 
-```python
-import kittn
+All of these queries can be appended with page=n for pageing. Pageing starts at 0 so /query?block=xxxx is equivalent to /query?block=xxxx&page=0. For blocks we support indexing. If you want to query a large range, supply index=n where n-1 is the last block that you queried. This will supersede paging once we include indexing for accounts.
 
-api = kittn.authorize('meowmeowmeow')
-```
+All requests are to stablenet.blockapps.net
 
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
-```
+###Block
 
-> Make sure to replace `meowmeowmeow` with your API key.
-
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-
-# Kittens
-
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
+```javascript
+$.get( "stablenet.blockapps.net/query/block"))
+  .done(function( data ) {
+    //operations on the returned json block
+  });
 ```
 
 ```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
+curl "http://stablenet.blockapps.net/query/block"
 ```
 
-> The above command returns JSON structured like this:
+>The above command returns JSON structured like this:
 
 ```json
 [
   {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Isis",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
+    "next":"/query/block?index=82",
+    "kind":"Block",
+    "blockUncles":[],
+    "receiptTransactions":[],
+    "blockData":{
+      "extraData":0,
+      "gasUsed":0,
+      "gasLimit":3141592,
+      "kind":"BlockData",
+      "unclesHash":"1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+      "mixHash":"0000000000000000000000000000000000000000000000000000000000000000",
+      "receiptsRoot":"56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+      "number":0,
+      "difficulty":131072,
+      "timestamp":"1970-01-01T00:00:00.000000000000Z",
+      "coinbase":"0",
+      "parentHash":"0000000000000000000000000000000000000000000000000000000000000000",
+      "nonce":42,
+      "stateRoot":"9178d0f23c965d81f0834a4c72c6253ce6830f4022b1359aaebfc1ecba442d4e",
+      "transactionsRoot":"56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"
+    }
   }
 ]
 ```
 
-This endpoint retrieves all kittens.
+`GET /query/block?`
 
-### HTTP Request
+Note that blocks come with a next field that contains the index for the next 100 results.
 
-`GET http://example.com/kittens`
+Query	| Description
+----- | -----------
+number |	Returns blocks that match a specific number
+maxnumber |	Returns blocks with a number less than a maximum
+minnumber |	Returns blocks with a number greater than a minimum
+gaslim |	Returns blocks that match the specified gas limit
+maxgaslim |	Returns blocks with agas limit less than a maximum gas limit
+mingaslim |	Returns blocks with a gas limit greater than a minimum
+gasused |	Returns blocks that match the specified gas used
+maxgasused |	Returns blocks with gas used less than a maximum
+mingasused |	Returns blocks with gas used greater than a minimum
+diff |	Returns blocks with a specific difficulty
+maxdiff |	Returns blocks with a difficulty less than a maximum
+mindiff |	Returns blocks with a difficulty greater than a minimum
+txaddress |	Queries blocks by their contained transaction addresses
+coinbase |	Queries blocks by the coinbase of contained transactions
+address |	Queres blocks by the address of contained transactions
+hash |	Queries blocks by their hash
 
-### Query Parameters
+### Account
 
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
+```javascript
+$.get( "stablenet.blockapps.net/query/account"))
+  .done(function( data ) {
+    //operations on the returned json block
+  });
 ```
 
 ```shell
-curl "http://example.com/api/kittens/3"
-  -H "Authorization: meowmeowmeow"
+curl "http://stablenet.blockapps.net/query/account"
 ```
 
-> The above command returns JSON structured like this:
+>The above command returns JSON structured like this:
+```json
+[
+  {
+    "contractRoot":"56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+    "next":"/query/account?index=b09a536c0aedf2b61dee9b8e0137bf5cb519bf340",
+    "kind":"AddressStateRef",
+    "balance":"1",
+    "address":"1",
+    "codeHash":"c5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
+    "nonce":0
+  }
+]
+```
+
+`GET /query/account?`
+
+Query |	Description
+balance |	Returns accounts that match a specific balance
+maxbalance |	Returns accounts with a balance less than a maximum
+minbalance |	Returns accounts with a balance greater than a minimum
+nonce |	Returns accounts that match a specific nonce
+maxnonce |	Returns accounts with a nonce less than a maximum
+minnonce |	Returns accounts with a nonce greater than a minimum
+address |	Returns accounts with the specified address
+
+
+###Transaction
+
+```javascript
+$.get( "stablenet.blockapps.net/query/transaction"))
+  .done(function( data ) {
+    //operations on the returned json block
+  });
+```
+
+```shell
+curl "http://stablenet.blockapps.net/query/transaction"
+```
+
+>The above command returns JSON structured like this:
 
 ```json
-{
-  "id": 2,
-  "name": "Isis",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
+[
+  {
+    "transactionType":"FunctionCall",
+    "next":"/query/transaction?index=39780",
+    "hash":"831716403cf9919e96ef122234b632e3be34c69c475d4f576b86a14b4b47eddc",
+    "gasLimit":90000,
+    "codeOrData":"de5f72fd",
+    "gasPrice":10000000000000,
+    "to":"b8cd5067227fdec355c5531accbcdf734a0869e8",
+    "value":"0",
+    "from":"1c11aa45c792e202e9ffdc2f12f99d0d209bef70",
+    "blockNumber":32308,
+    "r":"6acd4884c360d5906fc1434313c4325e6a1ff90a8dccffdc2879abab03385431",
+    "s":"2ba4e89ebc46a0800ef71876f6501f34caf8d098b57cbb73c64739e04894aaf4",
+    "v":"1b",
+    "nonce":0
+  }
+]
 ```
 
-This endpoint retrieves a specific kitten.
+`GET /query/transaction?`
 
-<aside class="warning">If you're not using an administrator API key, note that some kittens will return 403 Forbidden if they are hidden for admins only.</aside>
+Query |	Description
+----- | -----------
+from |	Returns transactions from the specified address
+to |	Returns transactions to the specified address
+address |	Returns transactions involving the specified address
+value |	Returns transactions of a specific value
+maxvalue | Returns transactions with a value less than a maximum
+minvalue | Returns transactions with a value greater than a minimum
+gasprice | Returns transactions with the specified gas price
+maxgasprice |	Returns transactions with a gas price less than a maximum
+mingasprice |	Returns transactions with a gas price greater than a minimum
+gaslimit | Returns transactions with the specified gas limit
+maxgaslimit |	Returns transactions with a gas limit less than a maximum
+mingaslimit |	Returns transactions with a gas limit greater than a minimum
+blocknumber |	Returns Transactions with a blocknumber
 
-### HTTP Request
+##Extra parameters
 
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
+Parameter |	Description
 --------- | -----------
-ID | The ID of the cat to retrieve
+raw=1 |	passes the pre-processor and gives you the raw result (default: raw=0)
+index= |	a cursor for querying the next 100 items correctly. Also see the next field.
 
+
+##Type of transactions
+
+Transaction	| Format
+----------- | ------
+FunctionCall |	toAddress == Null and len(code) > 0
+Contract | toAddress == Null and len(code) >= 0
+Transaction |f	toAddress != Null and len(code) == 0
