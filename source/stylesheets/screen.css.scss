@@ -90,9 +90,20 @@ html, body {
   }
 
   // This is the logo at the top of the ToC
-  &>img {
-    display: block;
-    margin: auto;
+  .logo-section {
+    background-color: $yellow;
+    margin: 0 auto;
+    padding: 25px 0;
+
+    &>.logo {
+      display: block;
+      background-image: url(../images/logo.png);
+      @include image-2x("../images/logo@2x.png", 129px, 103px);
+      width: 129px;
+      height: 103px;
+      margin: 0 auto;
+    }
+
   }
 
   &>.search {
@@ -118,10 +129,6 @@ html, body {
       color: $nav-text;
       @extend %icon-search;
     }
-  }
-
-  img+.tocify {
-    margin-top: $logo-margin;
   }
 
   .search-results {
@@ -212,7 +219,7 @@ html, body {
     border-top: 1px dashed $nav-footer-border-color;
 
     li,a {
-      color: $nav-text;
+      color: $footer-text;
       text-decoration: none;
     }
 
@@ -366,12 +373,12 @@ html, body {
   h1 {
     @extend %header-font;
     font-size: 30px;
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
-    border-bottom: 1px solid #ccc;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    border-bottom: 1px solid #e2e2e2;
     margin-bottom: $h1-margin-bottom;
     margin-top: 2em;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid #e2e2e2;
     @include background-image(
       linear-gradient(top, #fff, #f9f9f9)
     );

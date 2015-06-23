@@ -6,7 +6,7 @@ language_tabs:
   - shell
 
 toc_footers:
-  - <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>
+  - Copyright © 2015 by <a href="http://www.consensys.net">ConsenSys, LLC</a>
 
 includes:
 
