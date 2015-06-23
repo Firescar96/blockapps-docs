@@ -24,6 +24,8 @@ Coming Soon:
 
 Push Notifications - be notified of new blocks, transaction confirmations, as they happen. Transaction Signing - sign transactions in the browser, and push them to the network - without running a client locally. Network Statistics - view the health of the network, in real time.
 
+
+
 #Endpoints
 
 >Our javascript examples use the jQuery library
@@ -83,22 +85,22 @@ Note that blocks come with a next field that contains the index for the next 100
 
 Parameter |	Description
 --------- | -----------
-number |	Returns blocks that match a specific number
-maxnumber |	Returns blocks with a number less than a maximum
-minnumber |	Returns blocks with a number greater than a minimum
-gaslim |	Returns blocks that match the specified gas limit
-maxgaslim |	Returns blocks with agas limit less than a maximum gas limit
-mingaslim |	Returns blocks with a gas limit greater than a minimum
-gasused |	Returns blocks that match the specified gas used
-maxgasused |	Returns blocks with gas used less than a maximum
-mingasused |	Returns blocks with gas used greater than a minimum
-diff |	Returns blocks with a specific difficulty
-maxdiff |	Returns blocks with a difficulty less than a maximum
-mindiff |	Returns blocks with a difficulty greater than a minimum
-txaddress |	Queries blocks by their contained transaction addresses
-coinbase |	Queries blocks by the coinbase of contained transactions
-address |	Queres blocks by the address of contained transactions
-hash |	Queries blocks by their hash
+**number** |	Returns blocks that match a specific number
+**maxnumber** |	Returns blocks with a number less than a maximum
+**minnumber** |	Returns blocks with a number greater than a minimum
+**gaslim** |	Returns blocks that match the specified gas limit
+**maxgaslim** |	Returns blocks with agas limit less than a maximum gas limit
+**mingaslim** |	Returns blocks with a gas limit greater than a minimum
+**gasused** |	Returns blocks that match the specified gas used
+**maxgasused** |	Returns blocks with gas used less than a maximum
+**mingasused** |	Returns blocks with gas used greater than a minimum
+**diff** |	Returns blocks with a specific difficulty
+**maxdiff** |	Returns blocks with a difficulty less than a maximum
+**mindiff** |	Returns blocks with a difficulty greater than a minimum
+**txaddress** |	Queries blocks by their contained transaction addresses
+**coinbase** |	Queries blocks by the coinbase of contained transactions
+**address** |	Queres blocks by the address of contained transactions
+**hash** |	Queries blocks by their hash
 
 ### Account
 
@@ -133,13 +135,13 @@ curl "http://stablenet.blockapps.net/query/account"
 
 Parameter |	Description
 --------- | -----------
-balance |	Returns accounts that match a specific balance
-maxbalance |	Returns accounts with a balance less than a maximum
-minbalance |	Returns accounts with a balance greater than a minimum
-nonce |	Returns accounts that match a specific nonce
-maxnonce |	Returns accounts with a nonce less than a maximum
-minnonce |	Returns accounts with a nonce greater than a minimum
-address |	Returns accounts with the specified address
+**balance** |	Returns accounts that match a specific balance
+**maxbalance** |	Returns accounts with a balance less than a maximum
+**minbalance** |	Returns accounts with a balance greater than a minimum
+**nonce** |	Returns accounts that match a specific nonce
+**maxnonce** |	Returns accounts with a nonce less than a maximum
+**minnonce** |	Returns accounts with a nonce greater than a minimum
+**address** |	Returns accounts with the specified address
 
 
 ###Transaction
@@ -182,32 +184,353 @@ curl "http://stablenet.blockapps.net/query/transaction"
 
 Parameter |	Description
 --------- | -----------
-from |	Returns transactions from the specified address
-to |	Returns transactions to the specified address
-address |	Returns transactions involving the specified address
-value |	Returns transactions of a specific value
-maxvalue | Returns transactions with a value less than a maximum
-minvalue | Returns transactions with a value greater than a minimum
-gasprice | Returns transactions with the specified gas price
-maxgasprice |	Returns transactions with a gas price less than a maximum
-mingasprice |	Returns transactions with a gas price greater than a minimum
-gaslimit | Returns transactions with the specified gas limit
-maxgaslimit |	Returns transactions with a gas limit less than a maximum
-mingaslimit |	Returns transactions with a gas limit greater than a minimum
-blocknumber |	Returns Transactions with a blocknumber
+**from** |	Returns transactions from the specified address
+**to** |	Returns transactions to the specified address
+**address** |	Returns transactions involving the specified address
+**value** |	Returns transactions of a specific value
+**maxvalue** | Returns transactions with a value less than a maximum
+**minvalue** | Returns transactions with a value greater than a minimum
+**gasprice** | Returns transactions with the specified gas price
+**maxgasprice** |	Returns transactions with a gas price less than a maximum
+**mingasprice** |	Returns transactions with a gas price greater than a minimum
+**gaslimit** | Returns transactions with the specified gas limit
+**maxgaslimit** |	Returns transactions with a gas limit less than a maximum
+**mingaslimit** |	Returns transactions with a gas limit greater than a minimum
+**blocknumber** |	Returns Transactions with a blocknumber
 
 ##Extra parameters
 
 Parameter |	Description
 --------- | -----------
-raw=1 |	passes the pre-processor and gives you the raw result (default: raw=0)
-index= |	a cursor for querying the next 100 items correctly. Also see the next field.
+**raw=1** |	passes the pre-processor and gives you the raw result (default: raw=0)
+**index** |	a cursor for querying the next 100 items correctly. Also see the next field.
 
 
 ##Type of transactions
 
 Transaction	| Format
 ----------- | ------
-Contract | toAddress != Null and len(code) >= 0
-FunctionCall |	toAddress == Null and len(code) > 0
-Transaction |	toAddress != Null and len(code) == 0
+**Contract** | toAddress != Null and len(code) >= 0
+**FunctionCall** |	toAddress == Null and len(code) > 0
+**Transaction** |	toAddress != Null and len(code) == 0
+
+
+
+#Demo
+
+We have a tutorial application using the BlockApps API to create a block explorer. Demo the app then follow the tutorial to see how it works.
+
+<aside class="">
+ <a href="../demo/">DEMO</a>
+</aside>
+
+
+To learn how to build this demo, continue to the next section.
+
+
+
+#Tutorial
+
+##Building Your Own Address Explorer
+
+Building an Address Explorer on top of BlockApps is easy. In fact, BlockApps does most of the work for you, providing all the information you need to query and display information about an account. With BlockApps' help, you'll find that a significant portion of the effort of building an explorer is getting everything to look nice. 
+
+## Background
+
+In order to build an address explorer, you must first know a bit about Ethereum. If you're completely new to Ethereum and haven't yet built your first distributed application, we suggest you check out [ethereum.org](http://ethereum.org/) as well as the tutorials listed under [dApps for Beginners](https://dappsforbeginners.wordpress.com/) first. This should give you at least a basic understanding of blocks, block chains, Ethereum, accounts, addresses, transactions, contracts, and gas. For the purposes of this tutorial, let's define some of these anyway: 
+
+* An **account** is an ethereum address that holds a specific amount of Ether. Like Bitcoin, accounts can transfer Ether to other accounts (interchangeably, "account addresses"), as well as make more complex transactions listed below.
+* A **transaction** is an interaction with the Ethereum block chain. Transactions can be transfers of Ether between accounts; they can also add contracts onto the Ethereum block chain, or call a function listed in one of those contracts.
+* A **contract** is a piece of code that has been added to the block chain that contains data and functions that can be called from transactions. Calling a function on a contract or adding a contract to the block chain takes **gas**; gas is another word for the Ether in an Ethereum account, however in this case it's used to pay for the processing of that contract on the Ethereum network. 
+* A **block** is a chunk of data that contains a list of transactions. Transactions are processed by the Ethereum network in blocks, so when building an address explorer, we'll have to interact with those blocks as we go along. More on that later.
+
+## Getting Started
+
+Let's first get our basic code set up. 
+
+The following is a slimmed down version of what's available in the repository. The version we'll create here won't contain an input box to enter your Ethereum address (we'll leave that as an experiment for the reader), and instead your Ethereum address will be pulled from the browser's query string. There are also many features that have been left out, but the good news is you'll see just how easy is it to get the bulk of an address explorer up and running.
+
+#### index.html 
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Address Explorer</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" rel="stylesheet">
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script type="text/javascript" src="./address-explorer.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1 class="twelve columns">
+      Your Account
+    </h1>
+    <div class="five columns">
+      <span id="displayed_balance" class="value">&nbsp;</span>
+      <br><span class="label">Total Balance</span>
+    </div>
+    <div class="four columns">
+      <span id="transaction_count" class="value">&nbsp;</span>
+      <br><span class="label">Transactions</span>
+    </div>
+    <div class="two columns">
+      <span id="blocks_mined_count" class="value">&nbsp;</span>
+      <br><span class="label">Blocks Mined</span>
+    </div>
+    <h4 class="twelve columns">Activity</h4>
+  </div>
+</body>
+</html> 
+```
+
+#### address-explorer.js
+
+```javascript
+$(document).on("ready", function() {
+  console.log("Address Explorer JS up and running.");
+});
+```
+
+After saving the above two files, you should be able to open `index.html` in your browser. You should see a very basic HTML structure with no data, an if you open up your developer console you should see "Address Explorer JS up and running." printed there.
+
+This means were good to move onto the next step!
+
+## Getting the Address
+
+For the purposes of this tutorial, we're not going to build a fancy interface that asks for the users address, mostly because it distracts from simplicity of the tutorial. Instead, we're going to get the address from the query string. To make it even easier, we're going to assume the *whole* query string is the address. Pulling the query string is easy, so you should be able to edit `address-explorer.js` to look like this: 
+
+#### address-explorer.js
+
+```javascript
+$(document).on("ready", function() {
+  console.log("Address Explorer JS up and running.");
+  var address = window.location.search.substring(1);
+  console.log("Address: " + address);
+});
+```
+
+Now, if we navigate to `/index.html?6a56cf7a57405800b18e3e0940628c190cfa73bc`, we should see the address `6a56cf7a57405800b18e3e0940628c190cfa73bc` printed in the console logs.
+
+![](http://i.imgur.com/NRqEaT7.png)
+
+Once we have the address, we can begin requesting data from BlockApps.
+
+## Getting the Account Balance
+
+Perhaps the most important piece of information to request is the account balance. BlockApps provides an API endpoint that will give you the balance of an address over time, where the most recent entry is the current account balance. Here's an example using address on the network as of this writing:
+
+[http://api.blockapps.net/query/account/address/6a56cf7a57405800b18e3e0940628c190cfa73bc](http://api.blockapps.net/query/account/address/6a56cf7a57405800b18e3e0940628c190cfa73bc)
+
+**Note:** Ethereum is churning through multiple test networks at the time of this writing, so the address listed above might not exist at the time you read this. Make sure to use as address you know exists!
+
+You can see that that endpoint provides multiple objects in an array. We'll use jQuery to make the request and parse the result, and then add the balance onto the page:
+
+#### address-explorer.js
+
+```
+$(document).on("ready", function() {
+  console.log("Address Explorer JS up and running.");
+  var address = window.location.search.substring(1);
+  console.log("Address: " + address);
+
+  $.getJSON("http://api.blockapps.net/query/account/address/" + address, function(balances, textStatus, jqXHR) {
+    $("#displayed_balance").html(balances[0].balance);
+  });
+});
+```
+
+**Note:** We're not checking for errors here. This is to make the tutorial easy, but for your own application you should handle the case where the request fails.
+
+You should now see something like this!
+
+![](http://i.imgur.com/iilKmj5.png)
+
+From here, we can now move onto getting a list of this accounts transactions.
+
+## Getting an Accounts Transactions
+
+For an account explorer to be useful, we want to see all the transactions that were made *from* this account as well as all transactions sent *to* this account. Fortunately, BlockApps helps us with this significantly by providing an endpoint that does exactly that. Here's an example for the same account used above:
+
+[http://api.blockapps.net/query/transaction/address/6a56cf7a57405800b18e3e0940628c190cfa73bc](http://api.blockapps.net/query/transaction/address/6a56cf7a57405800b18e3e0940628c190cfa73bc)
+
+Like requesting an account balance, BlockApps provides us with an array of objects as a response. Each of these objects represent a transaction that involved the address requested, and as mentioned, transactions can be of many types. BlockApps makes it easy for you to distinguish between the types of transactions by adding a `transactionType` key to each transaction. The values are as follows:
+
+* `Transfer`: Either a user transferred Ether to our account, or we transferred Ether from our account to another user. If the transaction is of type `Transfer`, then a `to` and `from` keys will be provided letting you know the direction of the transfer (one of them will be our account). The `value` key, then, tells you the amount of the transfer, which will be important to display to the user.
+* `Contract`: This means our account placed a contract on the network. Adding a contract onto the network costs gas, and for the purposes of an address explorer we'll want to display how much that was. This information is stored on the block.
+* `FunctionCall`: This means our account called a function on an existing contract. Like adding a contract to the network, calling a function requires gas, so we'll need information about the block here as well.
+
+Notice that for all of the transactions, none of them contain a timestamp. This is because that information is stored on the block, and so regardless of type, we'll need to request the block so we can display that as well. 
+
+Before adding the above request into our address explorer, lets first cover getting the blocks associated with each transaction. 
+
+## Getting a Transaction's Block
+
+Each transaction object shown above has an associated block id (the `blockId` key). We'll use this id to request the associated block. Here's an example:
+
+[http://api.blockapps.net/query/block/blockid/225955](http://api.blockapps.net/query/block/blockid/225955)
+
+Notice that with this request, we're given an array containing a single object. This object has multiple useful pieces of information, but we'll only cover what's important to us right now. Here's what we'll need: 
+
+* `gasUsed`: Because contracts and function calls have associated gas usage.
+* `timestamp`: Because we want to know when transactions occurred. 
+
+From here we can take both the transaction request and the block requests and put them into our app:
+
+#### address-explorer.js
+
+```javascript
+$(document).on("ready", function() {
+  console.log("Address Explorer JS up and running.");
+  var address = window.location.search.substring(1);
+  console.log("Address: " + address);
+
+  // Get the account balance.
+  $.getJSON("http://api.blockapps.net/query/account/address/" + address, function(balances, textStatus, jqXHR) {
+    $("#displayed_balance").html(balances[0].balance);
+  });
+
+  // Function for getting individual blocks.
+  var createTransactionHandler = function(transaction) {
+    return function(result, textStatus, jqXHR) {
+      block = result[0];
+      console.log(transaction, block.number);
+    };
+  };
+
+  // Get each transaction, and get each block associated with the transaction.
+  $.getJSON("http://api.blockapps.net/query/transaction/address/" + address, function(transactions, textStatus, jqXHR) {
+      $("#transaction_count").text(transactions.length);
+      
+      for (var i = 0; i < transactions.length; i++) {
+        var transaction = transactions[i];
+        $.getJSON("http://api.blockapps.net/query/block/blockid/" + transaction.blockId, createTransactionHandler(transaction));
+      }
+  });
+});
+```
+
+You'll notice that the last block of code above requests the transactions, and then we request each transaction's block within a `for` loop. Because we're in that loop, we have to create a new handler for each block or else we'll have issues with Javascript closures. This makes `createTransactionHandler` the primary method where we handle transactions and their blocks. You'll notice that currently, it's just outputting transactions and their block number to the console.
+
+## Displaying Transactions
+
+As mentioned, perhaps the hardest part about creating an address explorer is simply displaying all the information. What we'll want to do is display the transactions with any associated information based on the transaction type (for instance, for a Transfer, we'll want to display who it's from and who its to). We'll also want to make sure these transactions are ordered by date, newest first, as that's important to the user. I've provided the associated code below. Note that this is simply one way to output this information, and for the purposes of this tutorial I've kept it very simple.
+
+#### address-explorer.js
+
+```javascript
+$(document).on("ready", function() {
+  console.log("Address Explorer JS up and running.");
+  var address = window.location.search.substring(1);
+  console.log("Address: " + address);
+
+  // Get the account balance.
+  $.getJSON("http://api.blockapps.net/query/account/address/" + address, function(balances, textStatus, jqXHR) {
+    $("#displayed_balance").html(balances[0].balance);
+  });
+
+  var addActivity = function(timestamp, message) {
+    var date = new Date(timestamp);
+    var element = $(document.createElement("div"));
+    element.addClass("transaction twelve columns");
+    element.html(date.toISOString() + " &mdash;  " + message);
+    element.data("date", date.getTime());
+
+    // Keep DOM elements ordered by date.
+    var elements = $(".transaction").detach().get();
+    elements.push(element);
+    elements = elements.sort(function(a,b) {
+      a = parseInt($(a).data("date"));
+      b = parseInt($(b).data("date"));
+      return b - a;
+    });
+    $(".container").append(elements);
+  };
+
+  // Function for getting individual blocks.
+  var createTransactionHandler = function(transaction) {
+    return function (result, textStatus, jqXHR) {
+      block = result[0];
+
+      switch (transaction.transactionType) {
+        case "Contract":
+          addActivity(block.timestamp, "New contract added to the network at cost of " + block.gasUsed + " wei.");
+          break;
+        case "FunctionCall":
+          addActivity("Function call to contract at cost of " + block.gasUsed + " wei.");
+          break;
+        case "Transfer":
+          if (transaction.to == address) {
+            addActivity(block.timestamp, "Credit of " + transaction.value + " wei sent from " + transaction.from + ".");
+          } else {
+            addActivity(block.timestamp, "Debit of " + transaction.value + " wei sent to " + transaction.to + ".");
+          }
+          break;
+        default:
+          return;
+      }
+    };
+  };
+
+  // Get each transaction, and get each block associated with the transaction.
+  $.getJSON("http://api.blockapps.net/query/transaction/address/" + address, function(transactions, textStatus, jqXHR) {
+      $("#transaction_count").text(transactions.length);
+      
+      for (var i = 0; i < transactions.length; i++) {
+        var transaction = transactions[i];
+        $.getJSON("http://api.blockapps.net/query/block/blockid/" + transaction.blockId, createTransactionHandler(transaction));
+      }
+  });
+});
+```
+
+You should now have something that looks like this:
+
+![](http://i.imgur.com/A33MnY7.png)
+
+From here, we can now perform our last step of the process, which is getting the amount of blocks mined by an address.
+
+## Getting Blocks Mined by an Address
+
+So far, we've shown everything related to an address that affects balance, but we're missing one thing. We still haven't shown blocks mined directly by the address, which is the last piece needed to show all the activity that's happened on an address. Mining will increase the amount of either in your account, so it's especially important for an address explorer.
+
+Luckily, BlockApps makes this easy. Requesting blocks mined by an address is as easy as requesting an address's transactions. Here's an example:
+
+[http://api.blockapps.net/query/block/coinbase/6a56cf7a57405800b18e3e0940628c190cfa73bc](http://api.blockapps.net/query/block/coinbase/6a56cf7a57405800b18e3e0940628c190cfa73bc)
+
+You'll notice that the output of this request differs slightly from the output when we request blocks by id. This will likely change in the future, however, the request still returns an array of blocks, and the relevant data we're interested can be found in the `blockData` key.
+
+Now that we have each block mined by this address, we can go ahead and add it to our activity list. To do this, you'll just need to add this block of code at the bottom of `address-explorer.js`'s main function:
+
+```javascript
+// Get blocks mined by the address.
+$.getJSON("http://api.blockapps.net/query/block/coinbase/" + address, function(blocks, textStatus, jqXHR) {
+    $("#blocks_mined_count").html(blocks.length)
+
+    for (var i = 0; i < blocks.length; i++) {
+      var block = blocks[i];
+      addActivity(block.blockData.timestamp, "Mined block #" + block.blockData.number + " with a block reward of 1500000000000000000 wei."); 
+    }
+});
+```
+
+And that's it! Mined blocks are now included in the list as activities like transactions; they're also sorted, and the number of blocks mined is displayed up top as well. You should now have an explorer that includes minded blocks, like this!
+
+![](http://i.imgur.com/uFUjF8O.png)
+
+## Wrapping Up and Further Study
+
+From this tutorial, you should have learned how to request enough information from BlockApps to create your own address explorer. The explorer you created was basic, and there are a few things you can do to make your explorer more usable and fully featured:
+
+* **Show Ether denominations other than wei.** If you're not familiar, wei is the smallest denomination of Ether on the Ethereum network, and all values provided by BlockApps are in wei. Wei so small, in fact, that in order to have 1 Ether's worth of wei, you'd have to have a "1" with nineteen 0's behind it. There are other denominations like `finney` and `szabo` that can be used to more easily describe Ether value, and you should look into displaying values in those denominations when possible. You can use [this converter](http://ether.fund/tool/converter) to help you figure out the relationship between the denominations.
+* **Use a BigNumber library.** As you may have noticed, all values of Ether provided by BlockApps were sent as Strings. This is because many programming languages, like Javascript, can't hold large numbers with arbitrary amounts of precision -- data will inevitably be lost. If you plan on converting your values of wei to different denominations, or you plan to perform arithmetic on Ether values, you'll want to [use this bignumber library](https://github.com/MikeMcl/bignumber.js/) instead of using `parseInt()`.
+* **Link addresses displayed on screen!** Your address explorer becomes more powerful when you can click into other addresses and see the activity going on with that account. You should turn all addresses displayed on screen -- such as addresses of accounts that sent Ether to your account -- into links so your users can click between them.
+* **Provide a nicer looking interface.** Spruce up the place! As stated multiple times, the hardest part about creating an address explorer with BlockApps is making things look nice. Change the font, add some color. Perhaps, even, change the way activities are displayed.
+
+There's a lot you can do, and this is just of taste of what BlockApps can do to help you build apps on Ethereum. I hope you enjoyed it, and don't hesitate to ask us any questions. Thanks!
+
+## Full Code
+
+You can find the full code for this tutorial [here](https://github.com/tcoulter/address-explorer/tree/master/tutorial).
+
+
