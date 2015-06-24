@@ -14,29 +14,71 @@ search: true
 ---
 
 # Introduction
-All blockchain based applications will need to pull information from the blockchain. We’ve made that process simple. We’ve created an intuitive RESTful API for querying the Ethereum Blockchain. Our Haskell based Ethereum network peer (client) is compliant with PoC9 and can also be used as a web server. But you don’t have to install the peer - simply follow the links below to try the API.
 
-We have static GET routes for transactions, blocks and account states. More generally, we support query strings. See the descriptions within, including examples. Also, check out a demo of how to parse and visualize the records you’ve requested.
 
-Take a look at our build test results.
+Blockchain-based applications need to pull information from the blockchain. BlockApps makes that process simple with an intuitive RESTful API for querying the Ethereum Blockchain.
 
-Coming Soon:
 
-Push Notifications - be notified of new blocks, transaction confirmations, as they happen. Transaction Signing - sign transactions in the browser, and push them to the network - without running a client locally. Network Statistics - view the health of the network, in real time.
+## dApps
+
+### What is a dApp?
+
+A dApp is a **decentralized App**.
+
+dApps on Ethereum can be entirely decentralized, meaning that they can run entirely peer-to-peer, like BitTorrent.
+
+Entirely P2P dApps require downloading a stack of desktop software tools so your computer can be an Ethereum node that talks to the Ethereum network. 
+
+BlockApps helps you develop webapps more quickly by being that stack for you. Just use the BlockApps API to build and prototype webapps that interact with the Ethereum Blockhain in any web browser.
+
+### How are dApps created?
+
+A basic dApp consists of a frontend user interface in a web browser and a smart contract on the blockchain. They can be comprised of an unlimited number of parts and features on top of this. dApps can also call other dApps.
+
+### What are the basic components of dApps on Ethereum?
+
+Check out our <a href="#background">introductory tutorial</a> for a quick overview of basic dApp concepts.
+
+
+## BlockApps
+
+### How does BlockApps work?
+
+Our Haskell-based Ethereum network peer (client) is compliant with the PoC9 Ethereum testnet and can also be used as a web server. But you don't have to install the peer, just use the API.
+
+We have static GET routes for transactions, blocks and account states. More generally, we support query strings.
+
+### Is there a demo or tutorial?
+
+Yes! Visit the links at left for a demo and tutorial of how to parse and visualize blockchain records requested using the BlockApps API.
+
+
+**Coming Soon:**
+
+ * **Push Notifications** - be notified of new blocks, transaction confirmations, as they happen.
+
+ * **Transaction Signing** - sign transactions in the browser, and push them to the network - without running a client locally.
+ 
+ * **Network Statistics** - view the health of the network, in real time.
 
 
 
 #Endpoints
 
->Our javascript examples use the jQuery library
+<aside class="notice">
+  Our JavaScript examples use the jQuery library.
+</aside>
 
-There are three REST endpoints, corrensponding to the query of a block, address and a transaction, respectively.
+There are three REST endpoints, corrensponding to:
 
-All of these queries can be appended with page=n for pageing. Pageing starts at 0 so /query?block=xxxx is equivalent to /query?block=xxxx&page=0. For blocks we support indexing. If you want to query a large range, supply index=n where n-1 is the last block that you queried. This will supersede paging once we include indexing for accounts.
+  * a query for a **block**, 
+  * a query for an **address** and 
+  * a query for a **transaction**.
 
 All requests are to stablenet.blockapps.net
 
-###Block
+
+##GET Block
 
 ```javascript
 $.get( "stablenet.blockapps.net/query/block"))
@@ -49,7 +91,7 @@ $.get( "stablenet.blockapps.net/query/block"))
 curl "http://stablenet.blockapps.net/query/block"
 ```
 
->The above command returns JSON structured like this:
+>The command at right returns JSON structured like this:
 
 ```json
 [
@@ -102,7 +144,9 @@ Parameter |	Description
 **address** |	Queres blocks by the address of contained transactions
 **hash** |	Queries blocks by their hash
 
-### Account
+
+
+## GET Account
 
 ```javascript
 $.get( "stablenet.blockapps.net/query/account"))
@@ -180,6 +224,8 @@ curl "http://stablenet.blockapps.net/query/transaction"
 ]
 ```
 
+## GET Transaction
+
 `GET /query/transaction?`
 
 Parameter |	Description
@@ -202,30 +248,40 @@ Parameter |	Description
 
 Parameter |	Description
 --------- | -----------
-**raw=1** |	passes the pre-processor and gives you the raw result (default: raw=0)
-**index** |	a cursor for querying the next 100 items correctly. Also see the next field.
+**raw** |	passes the pre-processor and gives you the raw result (default: raw=0).
+**index** |	a cursor for querying the next 100 items correctly. Also see page.
+**page** | append page=n to page any query with many results (default: page=0).*
+
+**Paging**
+
+Paging begins at 0 so `/query?block=xxxx` is equivalent to `/query?block=xxxx&page=0`.
 
 
-##Type of transactions
+**Indexing**
+
+For blocks we support indexing. If you want to query a large range, supply index=n where n-1 is the last block that you queried. This will supersede paging once we include indexing for accounts.
+
+
+##Types of transactions
 
 Transaction	| Format
 ----------- | ------
-**Contract** | toAddress != Null and len(code) >= 0
-**FunctionCall** |	toAddress == Null and len(code) > 0
-**Transaction** |	toAddress != Null and len(code) == 0
+**Contract** | If `toAddress != Null` and `len(code)>=0` then we have a Contract.
+**FunctionCall** | If `toAddress == Null` and `len(code)>0` then we have a FunctionCall.
+**Transaction** |	If `toAddress != Null` and `len(code)==0` we have a Transaction.
 
 
 
 #Demo
 
-We have a tutorial application using the BlockApps API to create a block explorer. Demo the app then follow the tutorial to see how it works.
+We have a demo application using the BlockApps API to create a block and address explorer. Try the demo below then follow the tutorial to see how it's built.
 
 <aside class="">
- <a href="../demo/">DEMO</a>
+ <a href="../demo/" target="blank">DEMO</a>
 </aside>
 
 
-To learn how to build this demo, continue to the next section.
+To learn how to build the demo, continue to the next section.
 
 
 
@@ -233,26 +289,46 @@ To learn how to build this demo, continue to the next section.
 
 ##Building Your Own Address Explorer
 
-Building an Address Explorer on top of BlockApps is easy. In fact, BlockApps does most of the work for you, providing all the information you need to query and display information about an account. With BlockApps' help, you'll find that a significant portion of the effort of building an explorer is getting everything to look nice. 
+Building an Address Explorer on top of BlockApps is easy. In fact, BlockApps does most of the work for you, providing all the information you need to query and display information about an account.
 
 ## Background
 
-In order to build an address explorer, you must first know a bit about Ethereum. If you're completely new to Ethereum and haven't yet built your first distributed application, we suggest you check out [ethereum.org](http://ethereum.org/) as well as the tutorials listed under [dApps for Beginners](https://dappsforbeginners.wordpress.com/) first. This should give you at least a basic understanding of blocks, block chains, Ethereum, accounts, addresses, transactions, contracts, and gas. For the purposes of this tutorial, let's define some of these anyway: 
+In order to build an address explorer, you must first know a bit about Ethereum. If you're completely new to Ethereum and we suggest you check out [ethereum101.org](http://ethereum101.org/).
 
-* An **account** is an ethereum address that holds a specific amount of Ether. Like Bitcoin, accounts can transfer Ether to other accounts (interchangeably, "account addresses"), as well as make more complex transactions listed below.
-* A **transaction** is an interaction with the Ethereum block chain. Transactions can be transfers of Ether between accounts; they can also add contracts onto the Ethereum block chain, or call a function listed in one of those contracts.
-* A **contract** is a piece of code that has been added to the block chain that contains data and functions that can be called from transactions. Calling a function on a contract or adding a contract to the block chain takes **gas**; gas is another word for the Ether in an Ethereum account, however in this case it's used to pay for the processing of that contract on the Ethereum network. 
+Let's start with a basic understanding of blocks, blockchains, Ethereum, accounts, addresses, transactions, contracts, and gas.
+
+* An **account** is an ethereum address that holds a specific amount of Ether, Ethereum's currency. Like Bitcoin, accounts can transfer Ether to other accounts (interchangeably, "account addresses"), as well as make more complex transactions listed below.
+
+* A **transaction** is an interaction with the Ethereum blockchain. Transactions can be transfers of Ether between accounts; they can also add contracts onto the Ethereum blockchain, or call a function listed in one of those contracts.
+
+* A **contract** is a piece of code that has been added to the blockchain that contains data and functions that can be called from transactions. Calling a function on a contract or adding a contract to the blockchain takes **gas**; gas is another word for the Ether in an Ethereum account, however in this case it's used to pay for the processing of that contract on the Ethereum network. 
+
 * A **block** is a chunk of data that contains a list of transactions. Transactions are processed by the Ethereum network in blocks, so when building an address explorer, we'll have to interact with those blocks as we go along. More on that later.
+
 
 ## Getting Started
 
-Let's first get our basic code set up. 
+Let's first get our basic code set up. (You can find the full code for this tutorial [here](https://github.com/tcoulter/address-explorer/tree/master/tutorial).)
 
 The following is a slimmed down version of what's available in the repository. The version we'll create here won't contain an input box to enter your Ethereum address (we'll leave that as an experiment for the reader), and instead your Ethereum address will be pulled from the browser's query string. There are also many features that have been left out, but the good news is you'll see just how easy is it to get the bulk of an address explorer up and running.
 
-#### index.html 
+
+
+```javascript
+/* address-explorer.js */
+
+$(document).on("ready", function() {
+  console.log("Address Explorer JS up and running.");
+});
+```
+
+#### address-explorer.js
+(code at right)
+
 
 ```html
+<!-- index.html -->
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -284,13 +360,9 @@ The following is a slimmed down version of what's available in the repository. T
 </html> 
 ```
 
-#### address-explorer.js
+#### index.html  
+(code at right)
 
-```javascript
-$(document).on("ready", function() {
-  console.log("Address Explorer JS up and running.");
-});
-```
 
 After saving the above two files, you should be able to open `index.html` in your browser. You should see a very basic HTML structure with no data, an if you open up your developer console you should see "Address Explorer JS up and running." printed there.
 
@@ -303,6 +375,8 @@ For the purposes of this tutorial, we're not going to build a fancy interface th
 #### address-explorer.js
 
 ```javascript
+/* address-explorer.js */
+
 $(document).on("ready", function() {
   console.log("Address Explorer JS up and running.");
   var address = window.location.search.substring(1);
@@ -328,7 +402,9 @@ You can see that that endpoint provides multiple objects in an array. We'll use 
 
 #### address-explorer.js
 
-```
+```javascript
+/* address-explorer.js */
+
 $(document).on("ready", function() {
   console.log("Address Explorer JS up and running.");
   var address = window.location.search.substring(1);
@@ -348,38 +424,49 @@ You should now see something like this!
 
 From here, we can now move onto getting a list of this accounts transactions.
 
-## Getting an Accounts Transactions
 
-For an account explorer to be useful, we want to see all the transactions that were made *from* this account as well as all transactions sent *to* this account. Fortunately, BlockApps helps us with this significantly by providing an endpoint that does exactly that. Here's an example for the same account used above:
+## Getting Account Transactions
+
+For an account explorer to be useful, we want to see all the transactions that were made *from* this account as well as all transactions sent *to* this account. Fortunately, BlockApps helps us with this significantly by providing an endpoint that does exactly that. 
+
+Here's an example for the same account used above:
 
 [http://api.blockapps.net/query/transaction/address/6a56cf7a57405800b18e3e0940628c190cfa73bc](http://api.blockapps.net/query/transaction/address/6a56cf7a57405800b18e3e0940628c190cfa73bc)
 
 Like requesting an account balance, BlockApps provides us with an array of objects as a response. Each of these objects represent a transaction that involved the address requested, and as mentioned, transactions can be of many types. BlockApps makes it easy for you to distinguish between the types of transactions by adding a `transactionType` key to each transaction. The values are as follows:
 
 * `Transfer`: Either a user transferred Ether to our account, or we transferred Ether from our account to another user. If the transaction is of type `Transfer`, then a `to` and `from` keys will be provided letting you know the direction of the transfer (one of them will be our account). The `value` key, then, tells you the amount of the transfer, which will be important to display to the user.
+
 * `Contract`: This means our account placed a contract on the network. Adding a contract onto the network costs gas, and for the purposes of an address explorer we'll want to display how much that was. This information is stored on the block.
+
 * `FunctionCall`: This means our account called a function on an existing contract. Like adding a contract to the network, calling a function requires gas, so we'll need information about the block here as well.
+
 
 Notice that for all of the transactions, none of them contain a timestamp. This is because that information is stored on the block, and so regardless of type, we'll need to request the block so we can display that as well. 
 
 Before adding the above request into our address explorer, lets first cover getting the blocks associated with each transaction. 
 
+
+
 ## Getting a Transaction's Block
 
-Each transaction object shown above has an associated block id (the `blockId` key). We'll use this id to request the associated block. Here's an example:
+Each transaction object shown above has an associated block id (the `blockId` key). We'll use this id to request the associated block.
+
+Here's an example:
 
 [http://api.blockapps.net/query/block/blockid/225955](http://api.blockapps.net/query/block/blockid/225955)
 
 Notice that with this request, we're given an array containing a single object. This object has multiple useful pieces of information, but we'll only cover what's important to us right now. Here's what we'll need: 
 
 * `gasUsed`: Because contracts and function calls have associated gas usage.
+
 * `timestamp`: Because we want to know when transactions occurred. 
 
 From here we can take both the transaction request and the block requests and put them into our app:
 
-#### address-explorer.js
-
 ```javascript
+/* address-explorer.js */
+
 $(document).on("ready", function() {
   console.log("Address Explorer JS up and running.");
   var address = window.location.search.substring(1);
@@ -410,7 +497,9 @@ $(document).on("ready", function() {
 });
 ```
 
-You'll notice that the last block of code above requests the transactions, and then we request each transaction's block within a `for` loop. Because we're in that loop, we have to create a new handler for each block or else we'll have issues with Javascript closures. This makes `createTransactionHandler` the primary method where we handle transactions and their blocks. You'll notice that currently, it's just outputting transactions and their block number to the console.
+#### address-explorer.js
+
+You'll notice that the last block of code at right requests the transactions, and then we request each transaction's block within a `for` loop. Because we're in that loop, we have to create a new handler for each block or else we'll have issues with Javascript closures. This makes `createTransactionHandler` the primary method where we handle transactions and their blocks. You'll notice that currently, it's just outputting transactions and their block number to the console.
 
 ## Displaying Transactions
 
@@ -419,6 +508,8 @@ As mentioned, perhaps the hardest part about creating an address explorer is sim
 #### address-explorer.js
 
 ```javascript
+/* address-explorer.js */
+
 $(document).on("ready", function() {
   console.log("Address Explorer JS up and running.");
   var address = window.location.search.substring(1);
@@ -518,19 +609,31 @@ And that's it! Mined blocks are now included in the list as activities like tran
 
 ![](http://i.imgur.com/uFUjF8O.png)
 
+
+
 ## Wrapping Up and Further Study
 
 From this tutorial, you should have learned how to request enough information from BlockApps to create your own address explorer. The explorer you created was basic, and there are a few things you can do to make your explorer more usable and fully featured:
 
 * **Show Ether denominations other than wei.** If you're not familiar, wei is the smallest denomination of Ether on the Ethereum network, and all values provided by BlockApps are in wei. Wei so small, in fact, that in order to have 1 Ether's worth of wei, you'd have to have a "1" with nineteen 0's behind it. There are other denominations like `finney` and `szabo` that can be used to more easily describe Ether value, and you should look into displaying values in those denominations when possible. You can use [this converter](http://ether.fund/tool/converter) to help you figure out the relationship between the denominations.
+
 * **Use a BigNumber library.** As you may have noticed, all values of Ether provided by BlockApps were sent as Strings. This is because many programming languages, like Javascript, can't hold large numbers with arbitrary amounts of precision -- data will inevitably be lost. If you plan on converting your values of wei to different denominations, or you plan to perform arithmetic on Ether values, you'll want to [use this bignumber library](https://github.com/MikeMcl/bignumber.js/) instead of using `parseInt()`.
+
 * **Link addresses displayed on screen!** Your address explorer becomes more powerful when you can click into other addresses and see the activity going on with that account. You should turn all addresses displayed on screen -- such as addresses of accounts that sent Ether to your account -- into links so your users can click between them.
+
 * **Provide a nicer looking interface.** Spruce up the place! As stated multiple times, the hardest part about creating an address explorer with BlockApps is making things look nice. Change the font, add some color. Perhaps, even, change the way activities are displayed.
 
 There's a lot you can do, and this is just of taste of what BlockApps can do to help you build apps on Ethereum. I hope you enjoyed it, and don't hesitate to ask us any questions. Thanks!
 
-## Full Code
+## Source Code
 
 You can find the full code for this tutorial [here](https://github.com/tcoulter/address-explorer/tree/master/tutorial).
 
 
+## Further Resources
+
+Want to learn more about dApps?  
+
+Check out [dApps for Beginners](https://dappsforbeginners.wordpress.com/) which will teach you how to use Ethereum using a full stack.
+
+Also <a href="http://eepurl.com/brjkJX" target="blank">sign up</a> for our newsletter to hear more about future BlockApps tutorials.
