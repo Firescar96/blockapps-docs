@@ -27,7 +27,7 @@ A dApp is a **decentralized App**.
 
 dApps on Ethereum can be entirely decentralized, meaning that they can run entirely peer-to-peer, like BitTorrent.
 
-Entirely P2P dApps require downloading a stack of desktop software tools so your computer can be an Ethereum node that talks to the Ethereum network.
+Entirely P2P dApps require downloading a stack of desktop software tools so your computer can be an Ethereum node that talks to the Ethereum network. 
 
 BlockApps helps you develop webapps more quickly by being that stack for you. Just use the BlockApps API to build and prototype webapps that interact with the Ethereum Blockhain in any web browser.
 
@@ -58,7 +58,7 @@ Yes! Visit the links at left for a demo and tutorial of how to parse and visuali
  * **Push Notifications** - be notified of new blocks, transaction confirmations, as they happen.
 
  * **Transaction Signing** - sign transactions in the browser, and push them to the network - without running a client locally.
-
+ 
  * **Network Statistics** - view the health of the network, in real time.
 
 
@@ -68,7 +68,7 @@ Check out some sample queries made using the BlockApps API...
 
 Resources are located via GET routes. Requests are routed by the return type - blocks, accounts or transactions.
 
-We have a few pre-built simple routes shown below, and the API supports a general querystring syntax. Routes are meant to be invoked via HTTP requests and return raw JSON.
+We have a few pre-built simple routes shown below, and the API supports a general querystring syntax. Routes are meant to be invoked via XMLHttpRequest and return raw JSON. 
 
 ##By Block
 
@@ -86,7 +86,7 @@ We have a few pre-built simple routes shown below, and the API supports a genera
 **Accounts, too, are easily queried.**
 
 
-* What's going on at address <a href="http://stablenet.blockapps.net/query/account/address/af8b2d3fe28201476fc0a3961f8f9690693f3ef4">af8b2d3fe28201476fc0a3961f8f9690693f3ef4</a>?
+* What's going on at address <a href="http://stablenet.blockapps.net/query/account/address/4c712ac73a53046ce491d95f0aebf8ef8cb057">4c712ac73a53046ce491d95f0aebf8ef8cb057</a>?
 
 * Which accounts have nonce equal to <a href="http://stablenet.blockapps.net/query/account/nonce/2">two</a>?
 
@@ -98,38 +98,37 @@ We have a few pre-built simple routes shown below, and the API supports a genera
 
 * A popular <a href="http://stablenet.blockapps.net/query/transaction/address/e1fd0d4a52b75a694de8b55528ad48e2e2cf7859">address</a>.
 
-##By Transaction
-**Get information about pushed transactions**
-
-* The result of a contract creation <a
-href="http://stablenet.blockapps.net/transactionResult/02237887f5a4104e205835f9e94c84435913435a6c34b0b582c5f706571cd40c">transaction</a>
 
 #Endpoints
 
+<<<<<<< HEAD
+>Our javascript examples use the [jQuery(google.com) library
+=======
 <aside class="notice">
   Our JavaScript examples use the jQuery library.
 </aside>
+>>>>>>> df420fcd81edb9474788e62a06929a3fcfc5bb88
 
-There are multiple RESTful endpoints, corrensponding to:
+There are three REST endpoints, corrensponding to:
 
-  * operations on **blocks**,
-  * operations on **addresses** and
-  * opreations on **transactions**.
+  * a query for a **block**, 
+  * a query for an **address** and 
+  * a query for a **transaction**.
 
-All requests are to *http://stablenet.blockapps.net*
+All requests are to stablenet.blockapps.net
 
 
 ##GET Block
 
 ```javascript
-$.get( "http://stablenet.blockapps.net/query/block") {number: 42})
+$.get( "stablenet.blockapps.net/query/block"))
   .done(function( data ) {
     //operations on the returned json block
   });
 ```
 
 ```shell
-curl "http://stablenet.blockapps.net/query/block?number=42"
+curl "http://stablenet.blockapps.net/query/block"
 ```
 
 >The command at right returns JSON structured like this:
@@ -137,46 +136,27 @@ curl "http://stablenet.blockapps.net/query/block?number=42"
 ```json
 [
   {
-    "next":"/query/block?index=43&number=42",
+    "next":"/query/block?index=82",
     "kind":"Block",
     "blockUncles":[],
-    "receiptTransactions":
-      [
-        {
-          "transactionType":"FunctionCall",
-          "gasLimit":30000,
-          "kind":"Transaction",
-          "data":"00",
-          "gasPrice":10000000000000,
-          "to":
-          {
-            "address":"fd888462ba01400a37768e53791df4617c77cd08"
-          },
-          "value":16,
-          "r":"244fd84898d7c25537dc9a19b03f7ebf2796de804eb886e40a5ba2b4ff994788",
-          "s":"46ed2a17765fb10f46f9a70c2e5a8e3635113e03b5785b32b0f77c942e7188d1",
-          "v":"1c",
-          "nonce":0
-        }
-      ],
-      "blockData":
-        {
-          "extraData":0,
-          "gasUsed":0,
-          "gasLimit":3141592,
-          "kind":"BlockData",
-          "unclesHash":"1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
-          "mixHash":"0000000000000000000000000000000000000000000000000000000000000000",
-          "receiptsRoot":"56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
-          "number":42,
-          "difficulty":132480,
-          "timestamp":"2015-06-24T17:41:27.442848000000Z",
-          "coinbase":"5b42bd01ff7b368cd80a477cb1cf0d407e2b1cbe",
-          "parentHash":"6297f5531e118e73a204d5e2a1e1abef6650f3463375b9ce5439869b5271e95d",
-          "nonce":18446744073709551615,
-          "stateRoot":"9eb06ef32021054a4043cb65381910414d572e3ea5a1751036987cdc44c8e943",
-          "transactionsRoot":"56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"
-        }
+    "receiptTransactions":[],
+    "blockData":{
+      "extraData":0,
+      "gasUsed":0,
+      "gasLimit":3141592,
+      "kind":"BlockData",
+      "unclesHash":"1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+      "mixHash":"0000000000000000000000000000000000000000000000000000000000000000",
+      "receiptsRoot":"56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+      "number":0,
+      "difficulty":131072,
+      "timestamp":"1970-01-01T00:00:00.000000000000Z",
+      "coinbase":"0",
+      "parentHash":"0000000000000000000000000000000000000000000000000000000000000000",
+      "nonce":42,
+      "stateRoot":"9178d0f23c965d81f0834a4c72c6253ce6830f4022b1359aaebfc1ecba442d4e",
+      "transactionsRoot":"56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"
+    }
   }
 ]
 ```
@@ -209,14 +189,14 @@ Parameter |	Description
 ## GET Account
 
 ```javascript
-$.get( "http://stablenet.blockapps.net/query/account"), {address: "af8b2d3fe28201476fc0a3961f8f9690693f3ef4"})
+$.get( "stablenet.blockapps.net/query/account"))
   .done(function( data ) {
     //operations on the returned json block
   });
 ```
 
 ```shell
-curl "http://stablenet.blockapps.net/query/account?address=af8b2d3fe28201476fc0a3961f8f9690693f3ef4"
+curl "http://stablenet.blockapps.net/query/account"
 ```
 
 >The above command returns JSON structured like this:
@@ -225,11 +205,12 @@ curl "http://stablenet.blockapps.net/query/account?address=af8b2d3fe28201476fc0a
 [
   {
     "contractRoot":"56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+    "next":"/query/account?index=b09a536c0aedf2b61dee9b8e0137bf5cb519bf340",
     "kind":"AddressStateRef",
-    "balance":"1809251394333065553493296640760748560207343510400633812824226722060731360952",
-    "address":"af8b2d3fe28201476fc0a3961f8f9690693f3ef4",
-    "code":"",
-    "nonce":864
+    "balance":"1",
+    "address":"1",
+    "codeHash":"c5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
+    "nonce":0
   }
 ]
 ```
@@ -246,17 +227,18 @@ Parameter |	Description
 **minnonce** |	Returns accounts with a nonce greater than a minimum
 **address** |	Returns accounts with the specified address
 
-## GET Transaction
+
+###Transaction
 
 ```javascript
-$.get( "http://stablenet.blockapps.net/query/transaction"),{value:0})
+$.get( "stablenet.blockapps.net/query/transaction"))
   .done(function( data ) {
     //operations on the returned json block
   });
 ```
 
 ```shell
-curl "http://stablenet.blockapps.net/query/transaction?value=0"
+curl "http://stablenet.blockapps.net/query/transaction"
 ```
 
 >The above command returns JSON structured like this:
@@ -282,6 +264,8 @@ curl "http://stablenet.blockapps.net/query/transaction?value=0"
 ]
 ```
 
+## GET Transaction
+
 `GET /query/transaction?`
 
 Parameter |	Description
@@ -300,45 +284,6 @@ Parameter |	Description
 **mingaslimit** |	Returns transactions with a gas limit greater than a minimum
 **blocknumber** |	Returns Transactions with a blocknumber
 
-```javascript
-$.get( "http://stablenet.blockapps.net/transactionResult/4ee3298d059e3664673880db272aebd5215f23554265e3e1e9de6dbf02f9f9c2"))
-  .done(function( data ) {
-    //operations on the returned json block
-  });
-```
-
-```shell
-curl "http://stablenet.blockapps.net/transactionResult/4ee3298d059e3664673880db272aebd5215f23554265e3e1e9de6dbf02f9f9c2"
-```
-
->The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "contractRoot":"56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
-    "kind":"AddressStateRef",
-    "balance":"1809251394333065553493296640760748560207343510400633812824226722060731360952",
-    "address":"af8b2d3fe28201476fc0a3961f8f9690693f3ef4",
-    "code":"",
-    "nonce":864
-  }
-]
-```
-
-`GET /transactionResult/#hash`
-
-This route returns information about the the transaction passed to it as `#hash`
-
-
-###Types of transactions
-
-Transaction	| Format
------------ | ------
-**Contract** | If `toAddress != Null` and `len(code)>=0` then we have a Contract.
-**FunctionCall** | If `toAddress == Null` and `len(code)>0` then we have a FunctionCall.
-**Transfer** |	If `toAddress != Null` and `len(code)==0` we have a Transfer.
-
 ##Extra parameters
 
 Parameter |	Description
@@ -356,16 +301,44 @@ Paging begins at 0 so `/query?block=xxxx` is equivalent to `/query?block=xxxx&pa
 
 For blocks we support indexing. If you want to query a large range, supply index=n where n-1 is the last block that you queried. This will supersede paging once we include indexing for accounts.
 
+
+##Types of transactions
+
+Transaction	| Format
+----------- | ------
+<<<<<<< HEAD
+Contract | toAddress != Null and len(code) >= 0
+FunctionCall |	toAddress == Null and len(code) > 0
+Transaction |	toAddress != Null and len(code) == 0
+
+
+#Demo
+>[Demo the app](http://consensys.github.io/address-explorer/)
+
+>[Follow the tutorial](https://github.com/ConsenSys/address-explorer/wiki/Building-Your-Own-Address-Explorer)
+
+>[View the source](https://github.com/ConsenSys/address-explorer)
+
+We have a tutorial application using the blockapps api to create a block explorer.
+Demo the app then follow the tutorial to see how it works.
+=======
+**Contract** | If `toAddress != Null` and `len(code)>=0` then we have a Contract.
+**FunctionCall** | If `toAddress == Null` and `len(code)>0` then we have a FunctionCall.
+**Transaction** |	If `toAddress != Null` and `len(code)==0` we have a Transaction.
+
+
+
 #Demo
 
 We have a demo application using the BlockApps API to create a block and address explorer. Try the demo below then follow the tutorial to see how it's built.
 
 <aside class="">
- <a href="http://blockapps.net/demo/">DEMO</a>
+ <a href="../demo/" target="blank">DEMO</a>
 </aside>
 
 
 To learn how to build the demo, continue to the next section.
+
 
 
 #Tutorial
@@ -384,7 +357,7 @@ Let's start with a basic understanding of blocks, blockchains, Ethereum, account
 
 * A **transaction** is an interaction with the Ethereum blockchain. Transactions can be transfers of Ether between accounts; they can also add contracts onto the Ethereum blockchain, or call a function listed in one of those contracts.
 
-* A **contract** is a piece of code that has been added to the blockchain that contains data and functions that can be called from transactions. Calling a function on a contract or adding a contract to the blockchain takes **gas**; gas is another word for the Ether in an Ethereum account, however in this case it's used to pay for the processing of that contract on the Ethereum network.
+* A **contract** is a piece of code that has been added to the blockchain that contains data and functions that can be called from transactions. Calling a function on a contract or adding a contract to the blockchain takes **gas**; gas is another word for the Ether in an Ethereum account, however in this case it's used to pay for the processing of that contract on the Ethereum network. 
 
 * A **block** is a chunk of data that contains a list of transactions. Transactions are processed by the Ethereum network in blocks, so when building an address explorer, we'll have to interact with those blocks as we go along. More on that later.
 
@@ -440,7 +413,7 @@ $(document).on("ready", function() {
     <h4 class="twelve columns">Activity</h4>
   </div>
 </body>
-</html>
+</html> 
 ```
 
 #### index.html  
@@ -453,7 +426,7 @@ This means were good to move onto the next step!
 
 ## Getting the Address
 
-For the purposes of this tutorial, we're not going to build a fancy interface that asks for the users address, mostly because it distracts from simplicity of the tutorial. Instead, we're going to get the address from the query string. To make it even easier, we're going to assume the *whole* query string is the address. Pulling the query string is easy, so you should be able to edit `address-explorer.js` to look like this:
+For the purposes of this tutorial, we're not going to build a fancy interface that asks for the users address, mostly because it distracts from simplicity of the tutorial. Instead, we're going to get the address from the query string. To make it even easier, we're going to assume the *whole* query string is the address. Pulling the query string is easy, so you should be able to edit `address-explorer.js` to look like this: 
 
 #### address-explorer.js
 
@@ -510,7 +483,7 @@ From here, we can now move onto getting a list of this accounts transactions.
 
 ## Getting Account Transactions
 
-For an account explorer to be useful, we want to see all the transactions that were made *from* this account as well as all transactions sent *to* this account. Fortunately, BlockApps helps us with this significantly by providing an endpoint that does exactly that.
+For an account explorer to be useful, we want to see all the transactions that were made *from* this account as well as all transactions sent *to* this account. Fortunately, BlockApps helps us with this significantly by providing an endpoint that does exactly that. 
 
 Here's an example for the same account used above:
 
@@ -525,9 +498,9 @@ Like requesting an account balance, BlockApps provides us with an array of objec
 * `FunctionCall`: This means our account called a function on an existing contract. Like adding a contract to the network, calling a function requires gas, so we'll need information about the block here as well.
 
 
-Notice that for all of the transactions, none of them contain a timestamp. This is because that information is stored on the block, and so regardless of type, we'll need to request the block so we can display that as well.
+Notice that for all of the transactions, none of them contain a timestamp. This is because that information is stored on the block, and so regardless of type, we'll need to request the block so we can display that as well. 
 
-Before adding the above request into our address explorer, lets first cover getting the blocks associated with each transaction.
+Before adding the above request into our address explorer, lets first cover getting the blocks associated with each transaction. 
 
 
 
@@ -539,11 +512,11 @@ Here's an example:
 
 [http://api.blockapps.net/query/block/blockid/225955](http://api.blockapps.net/query/block/blockid/225955)
 
-Notice that with this request, we're given an array containing a single object. This object has multiple useful pieces of information, but we'll only cover what's important to us right now. Here's what we'll need:
+Notice that with this request, we're given an array containing a single object. This object has multiple useful pieces of information, but we'll only cover what's important to us right now. Here's what we'll need: 
 
 * `gasUsed`: Because contracts and function calls have associated gas usage.
 
-* `timestamp`: Because we want to know when transactions occurred.
+* `timestamp`: Because we want to know when transactions occurred. 
 
 From here we can take both the transaction request and the block requests and put them into our app:
 
@@ -571,7 +544,7 @@ $(document).on("ready", function() {
   // Get each transaction, and get each block associated with the transaction.
   $.getJSON("http://api.blockapps.net/query/transaction/address/" + address, function(transactions, textStatus, jqXHR) {
       $("#transaction_count").text(transactions.length);
-
+      
       for (var i = 0; i < transactions.length; i++) {
         var transaction = transactions[i];
         $.getJSON("http://api.blockapps.net/query/block/blockid/" + transaction.blockId, createTransactionHandler(transaction));
@@ -649,7 +622,7 @@ $(document).on("ready", function() {
   // Get each transaction, and get each block associated with the transaction.
   $.getJSON("http://api.blockapps.net/query/transaction/address/" + address, function(transactions, textStatus, jqXHR) {
       $("#transaction_count").text(transactions.length);
-
+      
       for (var i = 0; i < transactions.length; i++) {
         var transaction = transactions[i];
         $.getJSON("http://api.blockapps.net/query/block/blockid/" + transaction.blockId, createTransactionHandler(transaction));
@@ -683,7 +656,7 @@ $.getJSON("http://api.blockapps.net/query/block/coinbase/" + address, function(b
 
     for (var i = 0; i < blocks.length; i++) {
       var block = blocks[i];
-      addActivity(block.blockData.timestamp, "Mined block #" + block.blockData.number + " with a block reward of 1500000000000000000 wei.");
+      addActivity(block.blockData.timestamp, "Mined block #" + block.blockData.number + " with a block reward of 1500000000000000000 wei."); 
     }
 });
 ```
@@ -720,3 +693,4 @@ Want to learn more about dApps?
 Check out [dApps for Beginners](https://dappsforbeginners.wordpress.com/) which will teach you how to use Ethereum using a full stack.
 
 Also <a href="http://eepurl.com/brjkJX" target="blank">sign up</a> for our newsletter to hear more about future BlockApps tutorials.
+>>>>>>> df420fcd81edb9474788e62a06929a3fcfc5bb88
