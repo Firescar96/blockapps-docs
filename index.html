@@ -27,7 +27,7 @@
       </span>
     </a>
     <div class="tocify-wrapper">
-      <a href="http://blockapps.net">
+      <a href="http://www.blockapps.net">
         <div class="logo-section">
           <div class="logo"></div>
         </div>
@@ -91,6 +91,42 @@
 <li><p><strong>Push Notifications</strong> - be notified of new blocks, transaction confirmations, as they happen.</p></li>
 <li><p><strong>Transaction Signing</strong> - sign transactions in the browser, and push them to the network - without running a client locally.</p></li>
 <li><p><strong>Network Statistics</strong> - view the health of the network, in real time.</p></li>
+</ul>
+
+<h1 id="sample-queries">Sample Queries</h1>
+
+<p>Check out some sample queries made using the BlockApps API&hellip;</p>
+
+<p>Resources are located via GET routes. Requests are routed by the return type - blocks, accounts or transactions.</p>
+
+<p>We have a few pre-built simple routes shown below, and the API supports a general querystring syntax. Routes are meant to be invoked via XMLHttpRequest and return raw JSON. </p>
+
+<h2 id="by-block">By Block</h2>
+
+<p><strong>Blocks are fetchable by a variety of queries</strong></p>
+
+<ul>
+<li><p>Grab the genesis block by <a href="http://stablenet.blockapps.net/query/block/number/0">number</a> or by <a href="http://stablenet.blockapps.net/query/block/hash/fd4af92a79c7fc2fd8bf0d342f2e832e1d4f485c85b9152d2039e03bc604fdca">hash</a>.</p></li>
+<li><p>Find blocks with a fair amount of <a href="http://stablenet.blockapps.net/query/block/gasrange/lower/100000/upper/150000">gas usage</a>.</p></li>
+<li><p>Or even, get the last 42 blocks - in <a href="http://stablenet.blockapps.net/query/block/last/42">real time</a>.</p></li>
+</ul>
+
+<h2 id="by-account">By Account</h2>
+
+<p><strong>Accounts, too, are easily queried.</strong></p>
+
+<ul>
+<li><p>What&rsquo;s going on at address <a href="http://stablenet.blockapps.net/query/account/address/4c712ac73a53046ce491d95f0aebf8ef8cb057">4c712ac73a53046ce491d95f0aebf8ef8cb057</a>?</p></li>
+<li><p>Which accounts have nonce equal to <a href="http://stablenet.blockapps.net/query/account/nonce/2">two</a>?</p></li>
+<li><p>Does anyone have balance <a href="http://stablenet.blockapps.net/query/account/balance/33000000000000000000">33000000000000000000</a>?</p></li>
+</ul>
+
+<h2 id="by-address">By Address</h2>
+
+<p><strong>See the transations to and from addresses:</strong></p>
+
+<ul>
+<li>A popular <a href="http://stablenet.blockapps.net/query/transaction/address/e1fd0d4a52b75a694de8b55528ad48e2e2cf7859">address</a>.</li>
 </ul>
 
 <h1 id="endpoints">Endpoints</h1>
