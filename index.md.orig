@@ -1,18 +1,3 @@
----
-title: Blockapps Documentation
-
-language_tabs:
-  - javascript
-  - shell
-
-toc_footers:
-  - Copyright © 2015 by <a href="http://www.consensys.net">ConsenSys, LLC</a>
-
-includes:
-
-search: true
----
-
 # Introduction
 
 
@@ -62,12 +47,52 @@ Yes! Visit the links at left for a demo and tutorial of how to parse and visuali
  * **Network Statistics** - view the health of the network, in real time.
 
 
+#Sample Queries
+
+Check out some sample queries made using the BlockApps API...
+
+Resources are located via GET routes. Requests are routed by the return type - blocks, accounts or transactions.
+
+We have a few pre-built simple routes shown below, and the API supports a general querystring syntax. Routes are meant to be invoked via XMLHttpRequest and return raw JSON. 
+
+##By Block
+
+**Blocks are fetchable by a variety of queries**
+
+* Grab the genesis block by <a href="http://stablenet.blockapps.net/query/block/number/0">number</a> or by <a href="http://stablenet.blockapps.net/query/block/hash/fd4af92a79c7fc2fd8bf0d342f2e832e1d4f485c85b9152d2039e03bc604fdca">hash</a>.
+
+* Find blocks with a fair amount of <a href="http://stablenet.blockapps.net/query/block/gasrange/lower/100000/upper/150000">gas usage</a>.
+
+* Or even, get the last 42 blocks - in <a href="http://stablenet.blockapps.net/query/block/last/42">real time</a>.
+
+
+##By Account
+
+**Accounts, too, are easily queried.**
+
+
+* What's going on at address <a href="http://stablenet.blockapps.net/query/account/address/4c712ac73a53046ce491d95f0aebf8ef8cb057">4c712ac73a53046ce491d95f0aebf8ef8cb057</a>?
+
+* Which accounts have nonce equal to <a href="http://stablenet.blockapps.net/query/account/nonce/2">two</a>?
+
+* Does anyone have balance <a href="http://stablenet.blockapps.net/query/account/balance/33000000000000000000">33000000000000000000</a>?
+
+##By Address
+
+**See the transations to and from addresses:**
+
+* A popular <a href="http://stablenet.blockapps.net/query/transaction/address/e1fd0d4a52b75a694de8b55528ad48e2e2cf7859">address</a>.
+
 
 #Endpoints
 
+<<<<<<< HEAD
+>Our javascript examples use the [jQuery(google.com) library
+=======
 <aside class="notice">
   Our JavaScript examples use the jQuery library.
 </aside>
+>>>>>>> df420fcd81edb9474788e62a06929a3fcfc5bb88
 
 There are three REST endpoints, corrensponding to:
 
@@ -266,6 +291,22 @@ For blocks we support indexing. If you want to query a large range, supply index
 
 Transaction	| Format
 ----------- | ------
+<<<<<<< HEAD
+Contract | toAddress != Null and len(code) >= 0
+FunctionCall |	toAddress == Null and len(code) > 0
+Transaction |	toAddress != Null and len(code) == 0
+
+
+#Demo
+>[Demo the app](http://consensys.github.io/address-explorer/)
+
+>[Follow the tutorial](https://github.com/ConsenSys/address-explorer/wiki/Building-Your-Own-Address-Explorer)
+
+>[View the source](https://github.com/ConsenSys/address-explorer)
+
+We have a tutorial application using the blockapps api to create a block explorer.
+Demo the app then follow the tutorial to see how it works.
+=======
 **Contract** | If `toAddress != Null` and `len(code)>=0` then we have a Contract.
 **FunctionCall** | If `toAddress == Null` and `len(code)>0` then we have a FunctionCall.
 **Transaction** |	If `toAddress != Null` and `len(code)==0` we have a Transaction.
@@ -637,3 +678,4 @@ Want to learn more about dApps?
 Check out [dApps for Beginners](https://dappsforbeginners.wordpress.com/) which will teach you how to use Ethereum using a full stack.
 
 Also <a href="http://eepurl.com/brjkJX" target="blank">sign up</a> for our newsletter to hear more about future BlockApps tutorials.
+>>>>>>> df420fcd81edb9474788e62a06929a3fcfc5bb88
