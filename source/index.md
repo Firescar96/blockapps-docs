@@ -188,6 +188,7 @@ Note that blocks come with a next field that contains the index for the next 100
 Parameter |	Description
 --------- | -----------
 **number** |	Returns blocks that match a specific number
+**blockid** | Returns blocks that match a specific blockid
 **maxnumber** |	Returns blocks with a number less than a maximum
 **minnumber** |	Returns blocks with a number greater than a minimum
 **gaslim** |	Returns blocks that match the specified gas limit
